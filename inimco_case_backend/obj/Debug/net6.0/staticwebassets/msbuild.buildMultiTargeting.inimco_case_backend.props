@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\inimco_case_backend.props" />
+</Project>

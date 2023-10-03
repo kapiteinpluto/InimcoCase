@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "inimco_case_backend/1.0.0": {
+        "runtime": {
+          "inimco_case_backend.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "inimco_case_backend/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,7 +1,7 @@
 <template>
   <h2 class="pageTitle">User details</h2>
   <div class="infobox col">
-    <div class="row">
+    <div class="row basicInfo">
       <img
         class="profilePicture"
         src="@/assets/profile.png"
@@ -12,7 +12,7 @@
         <InputField v-model="lastName" inputName="lastname"></InputField>
       </div>
     </div>
-    <div class="row">
+    <div class="row detailInfo">
       <div class="col">
         <h3>Social skills</h3>
         <div v-for="(skill, index) in skills" :key="index">
@@ -43,7 +43,7 @@
         </div>
         <button
           class="add"
-          @click="this.socialMedia.push({ Type: '', Address: '' })"
+          @click="this.socialMedia.push({ type: '', address: '' })"
         >
           Add
         </button>
@@ -120,14 +120,43 @@ export default {
 }
 
 .infobox {
-  border: 0.1rem solid blue;
+  border: 0.1rem solid rgb(0, 0, 0);
   border-radius: 2rem;
   width: 90%;
   max-width: 80rem;
   margin: auto;
-  .profilePicture {
-    width: 10rem;
-    margin: 0.5rem 1rem;
+  background: rgb(171, 235, 243);
+
+  .basicInfo {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    .profilePicture {
+      width: 10rem;
+      padding: 0.5rem 2rem;
+      background: white;
+    }
+    .namebox {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      background: white;
+    }
+  }
+  .detailInfo {
+    display: flex;
+    margin: 5%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background: white;
+    div {
+      width: 45%;
+      min-width: 20rem;
+    }
+    .add {
+      width: 5rem;
+      margin: auto;
+    }
   }
 }
 
