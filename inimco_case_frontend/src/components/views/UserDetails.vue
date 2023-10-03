@@ -28,7 +28,7 @@
           v-for="(account, index) in socialMedia"
           :key="index"
         >
-          <select v-model="account.Type">
+          <select v-model="account.type">
             <option
               v-for="option in ['facebook', 'twitter', 'linkedin', 'other']"
               :key="option"
@@ -36,7 +36,7 @@
               {{ option }}
             </option>
           </select>
-          <input type="text" v-model="account.Address" />
+          <input type="text" v-model="account.address" />
           <button class="remove" @click="this.socialMedia.splice(index, 1)">
             -
           </button>
@@ -49,6 +49,7 @@
         </button>
       </div>
     </div>
+    <button @click="setDetails()">Save</button>
   </div>
   <div class="feedbackbox">
     <p>The number of vowels: {{ vowelCount }}</p>
@@ -60,20 +61,23 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 import InputField from "../atoms/InputField.vue";
 
 export default {
   components: { InputField },
   data() {
     return {
+      id: 1,
       firstName: "",
       lastName: "",
       skills: [],
       socialMedia: [],
     };
   },
-  created() {},
+  created() {
+    this.getDetails();
+  },
   computed: {
     vowelCount() {
       const vowels = ["a", "e", "i", "o", "u"];
@@ -101,7 +105,24 @@ export default {
       return JSON.stringify(this.$data, null, 2);
     },
   },
-  methods: {},
+  methods: {
+    getDetails() {
+      const url = "http://localhost:5236/user/" + this.id;
+      axios.get(url).then((res) => {
+        this.id = res.data.id;
+        this.firstName = res.data.firstName;
+        this.lastName = res.data.lastName;
+        this.skills = res.data.skills;
+        this.socialMedia = res.data.socialMedia;
+      });
+    },
+    setDetails() {
+      const url = "http://localhost:5236/user/" + this.id;
+      axios.put(url, this.$data).then(() => {
+        console.log("saved data");
+      });
+    },
+  },
 };
 </script>
 
