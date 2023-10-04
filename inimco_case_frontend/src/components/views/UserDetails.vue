@@ -15,7 +15,7 @@
     <div class="row detailInfo">
       <div class="col">
         <h3>Social skills</h3>
-        <div v-for="(skill, index) in skills" :key="index">
+        <div v-for="(skill, index) in skills" :key="index" class="skillInputs">
           <input type="text" v-model="skills[index]" />
           <button class="remove" @click="skills.splice(index, 1)">-</button>
         </div>
@@ -103,7 +103,17 @@ export default {
         .join("");
     },
     json() {
-      return JSON.stringify(this.$data, null, 2);
+      return JSON.stringify(
+        {
+          id: this.id,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          skills: this.skills,
+          socialMedia: this.socialMedia,
+        },
+        null,
+        2
+      );
     },
   },
   methods: {
@@ -210,6 +220,12 @@ export default {
       min-width: 20rem;
       background: white;
       border-radius: 1rem;
+      margin: 0.5rem 0;
+
+      .skillInputs,
+      .socialmediaInputs {
+        margin: auto;
+      }
     }
     .add {
       width: 5rem;
