@@ -3,7 +3,13 @@
     <label class="fancy-tag">
       {{ this.inputName }}
     </label>
-    <input class="inputField" v-model="value" type="text" />
+    <input
+      class="inputField"
+      v-model="value"
+      type="text"
+      @input="validateText"
+    />
+    <p v-if="error" class="error">{{ error }}</p>
   </div>
 </template>
 
@@ -21,12 +27,28 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      error: null,
+    };
+  },
   methods: {
-    doSearch() {
-      this.$router.push({
-        name: "search",
-        params: { searchString: this.searchString },
-      });
+    validateText() {
+      const validCharacters = /^[A-Za-z]+$/;
+      if (!this.value) {
+        this.error = this.inputName + " is required.";
+        this.$root.$refs.form.triggerError(this.inputName);
+      } else if (this.value.length < 2 || this.value.length > 50) {
+        this.error = this.inputName + " must be between 2 and 50 characters.";
+        this.$root.$refs.form.triggerError(this.inputName);
+      } else if (!this.value.match(validCharacters)) {
+        this.error =
+          this.inputName + " can only contain alphabetical characters.";
+        this.$root.$refs.form.triggerError(this.inputName);
+      } else {
+        this.error = null;
+        this.$root.$refs.form.removeError(this.inputName);
+      }
     },
   },
 };
@@ -34,13 +56,6 @@ export default {
 
 <style lang="scss">
 .inputField {
-  /* color: #fff;
-  background: linear-gradient(315deg, #42d3b3 25%, #647eff);
-  border: none;
-  padding: 5px 10px;
-  margin: 5px;
-  border-radius: 8px;
-  cursor: pointer; */
   border: solid 0.1rem #969696;
   border-radius: 0.2rem;
   height: 1.8rem;
@@ -52,5 +67,15 @@ export default {
 }
 .fieldGroup {
   align-items: start;
+}
+.error {
+  color: red;
+  margin: 0;
+  font-size: 0.9rem;
+  text-align: left;
+  &::first-letter {
+    text-transform: capitalize;
+  }
+  max-width: 12rem;
 }
 </style>

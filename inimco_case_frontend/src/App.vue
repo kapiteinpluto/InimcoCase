@@ -1,5 +1,5 @@
 <template>
-  <UserDetails />
+  <UserDetails ref="form" />
 </template>
 
 <script>
